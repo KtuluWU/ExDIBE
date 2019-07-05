@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel='stylesheet' href='assets/css/style.css'>
     <link rel='stylesheet' href='assets/css/sweet-alert.css'>
-    <title> Quel Title ? </title>
+    <title> ExDIBE </title>
 </head>
 
 <body>
