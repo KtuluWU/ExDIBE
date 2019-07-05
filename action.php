@@ -12,9 +12,11 @@ $pwd = $_POST["pwd"];
 $email = $_POST["email"];
 
 $url = "/Users/yw/Sites/ExDIBE/dibe_pdf_new2.py";
+$url_windows = "C:/xampp/htdocs/ExDIBE/dibe_pdf_new2.py";
 $url_files = "/ExDIBE/files/";
 
 $str_python = "/usr/local/bin/python3 ".$url." -s ".$siren." -i ".$ident." -p ".$pwd." -d ./files";
+/*$str_python = "python ".$url_windows." -s ".$siren." -i ".$ident." -p ".$pwd." -d ./files";*/
 exec($str_python, $output, $code);
 
 if ($code == 0) {
