@@ -45,11 +45,11 @@ function ajax_send_data() {
                 if (ajax.responseText == "200") {
                     swal({
                         title: "Bien envoyé!",
-                        text: "Fermer automatiquement après 5 secondes",
-                        timer: 5000,
+                        text: "Fermer automatiquement après 2 secondes",
+                        timer: 2000,
                         type: "success"
                     });
-                    setTimeout("location.reload()", 5000 )               
+                    setTimeout("location.reload()", 2000 )               
                 } else {
                     swal({
                         title: "Échoué!",
