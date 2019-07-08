@@ -21,7 +21,6 @@ body {
 	margin: 1em auto 2em;
 	max-width: 500px;
 	width: calc(100% - 2em);
-    vertical-align: top;
 	overflow: hidden;
     background: #A2C616;
     line-height: normal;
@@ -144,4 +143,34 @@ input {
 #loading_gif {
     display: none;
     margin: auto;
+}
+
+.commentaire_block {
+	display: block;
+    margin: 1em auto 2em;
+    max-width: 500px;
+	width: calc(100% - 2em);
+}
+
+.commentaire {
+	padding: 20px;
+	font-size: 20px;
+	background: #fff;
+	color: #6a7f95;
+	min-width: 100%;
+	min-height: 150px;
+	border: none;
+	border-radius: 20px;
+}
+
+#commentaire::-webkit-input-placeholder {
+	color: #6a7f95;
+}
+
+#commentaire::-moz-placeholder {
+	color: #6a7f95;
+}
+
+#commentaire::-ms-input-placeholder {
+	color: #6a7f95;
 }

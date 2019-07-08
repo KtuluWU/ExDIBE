@@ -3,6 +3,7 @@ function ajax_send_data() {
     var ident = document.form_info.ident.value;
     var pwd = document.form_info.password.value;
     var email = document.form_info.email.value;
+    var commentaire = document.form_info.commentaire.value.replace(/\n/g, "<br>");
     var url = "./action.php";
 
     siren = siren_checked(siren);
@@ -10,7 +11,7 @@ function ajax_send_data() {
 
     if (siren && ident) {
         document.getElementById("loading_gif").style.display = "block";
-        var data = "siren=" + siren + "&ident=" + ident + "&pwd=" + pwd + "&email=" + email;
+        var data = "siren=" + siren + "&ident=" + ident + "&pwd=" + pwd + "&email=" + email + "&commentaire=" + commentaire;
         var ajax = false;
         //初始化XMLHttpRequest对象
         if (window.XMLHttpRequest) { //Mozilla 浏览器
@@ -47,7 +48,8 @@ function ajax_send_data() {
                         text: "Fermer automatiquement après 5 secondes",
                         timer: 5000,
                         type: "success"
-                    })                
+                    });
+                    setTimeout("location.reload()", 5000 )               
                 } else {
                     swal({
                         title: "Échoué!",
