@@ -10,6 +10,7 @@ $siren = $_POST["siren"];
 $ident = $_POST["ident"];
 $pwd = $_POST["pwd"];
 $email = $_POST["email"];
+$commentaire = $_POST["commentaire"];
 
 $url = "/Users/yw/Sites/ExDIBE/dibe_pdf_new2.py";
 $url_windows = "C:/xampp/htdocs/ExDIBE/dibe_pdf_new2.py";
@@ -43,9 +44,9 @@ if ($code == 0) {
         }
 
         $mail->isHTML(true);  
-        $mail->Subject = 'DIBE';
-        $mail->Body = date('Y-m-d H:i:s');
-        $mail->AltBody = date('Y-m-d H:i:s');
+        $mail->Subject = 'ExDIBE - '.$ident;
+        $mail->Body = "<h1>IDENTIFIANT: ".$ident."</h1><br><h2>COMMENTAIRE: </h2><br>".$commentaire;
+        $mail->AltBody = "IDENTIFIANT: ".$ident." COMMENTAIRE: ".$commentaire;
 
         $mail->send(); 
 

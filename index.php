@@ -14,14 +14,14 @@
             <div class="content">
                 <div class="input_block">
                     <span class="input">
-                        <input class="input_field" type="text" name="siren" id="siren" maxlength="15"/>
+                        <input class="input_field" type="text" name="siren" id="siren" maxlength="15" value=""/>
                         <label class="input_label" for="siren">
                             <span class="input_label-content">Siren</span>
                         </label>
                     </span>
 
                     <span class="input">
-                        <input class="input_field" type="text" name="ident" id="ident" maxlength="30"/>
+                        <input class="input_field" type="text" name="ident" id="ident" maxlength="30" value=""/>
                         <label class="input_label" for="ident">
                             <span class="input_label-content">Identifiant</span>
                         </label>
@@ -41,6 +41,10 @@
                         <label class="input_label" for="email">
                             <span class="input_label-content">Email</span>
                         </label>
+                    </span>
+
+                    <span class="commentaire_block">
+                        <textarea class="commentaire" name="commentaire" id="commentaire" maxlength="100" placeholder="Commentaire..."></textarea>
                     </span>
 
                 </div>
