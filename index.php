@@ -28,7 +28,7 @@
                     </span>
 
                     <span class="input">
-                        <input class="input_field" type="password" name="password" id="password" value="98541"
+                        <input class="input_field" type="password" name="password" id="password" value="12345"
                             autocomplete="off" />
                         <label class="input_label" for="password">
                             <span class="input_label-content">Mot de passe</span>
