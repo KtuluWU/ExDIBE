@@ -1,5 +1,5 @@
 body {
-    background: #f9f7f6;
+	background: #f9f7f6;
 	color: #404d5b;
 	font-weight: 500;
 	font-size: 1.05em;
@@ -7,33 +7,38 @@ body {
 }
 
 .container {
-    margin: 0 auto;
+	margin: 0 auto;
 	text-align: center;
 	overflow: hidden;
-    font-size: 150%;
-    padding: 3em 0;
+	font-size: 150%;
+	padding: 3em 0;
+}
+
+.input-block {
+	max-width: 500px;
+	width: calc(100% - 2em);
+	margin: 1em auto 2em;
 }
 
 .input {
-    position: relative;
+	position: relative;
 	z-index: 1;
 	display: block;
-	margin: 1em auto 2em;
-	max-width: 500px;
-	width: calc(100% - 2em);
+	/*margin: 1em auto 2em;*/
+	
 	overflow: hidden;
-    background: #A2C616;
-    line-height: normal;
-    font-size: 100%;
-    border-radius: 20px;
+	background: #A2C616;
+	line-height: normal;
+	font-size: 100%;
+	border-radius: 20px;
 }
 
 .input_field {
-    position: absolute;
+	position: absolute;
 	display: block;
 	float: right;
-    padding: 0.8em;
-    top: 0;
+	padding: 0.8em;
+	top: 0;
 	right: 100%;
 	width: 60%;
 	height: 100%;
@@ -43,7 +48,8 @@ body {
 	border-radius: 0;
 	font-weight: bold;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    -webkit-appearance: none; /* for box shadows to show on iOS */
+	-webkit-appearance: none;
+	/* for box shadows to show on iOS */
 	-webkit-transition: -webkit-transform 0.5s;
 	transition: transform 0.5s;
 	-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
@@ -55,7 +61,7 @@ body {
 }
 
 .input_label {
-    display: block;
+	display: block;
 	float: right;
 	padding: 0 1em;
 	width: 100%;
@@ -68,8 +74,8 @@ body {
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-    user-select: none;
-    z-index: 10;
+	user-select: none;
+	z-index: 10;
 	text-align: left;
 	cursor: text;
 	-webkit-transform-origin: 0% 50%;
@@ -81,7 +87,7 @@ body {
 }
 
 .input_label-content {
-    position: relative;
+	position: relative;
 	display: block;
 	padding: 1.5em 0;
 	width: 100%;
@@ -95,16 +101,17 @@ body {
 	transition-delay: 0.06s;
 }
 
-.input_field:focus + .input_label,
-.input-filled .input_label  {
+.input_field:focus+.input_label,
+.input-filled .input_label {
 	-webkit-transform: translate3d(60%, 0, 0);
 	transform: translate3d(60%, 0, 0);
 	pointer-events: none;
 }
 
 @media screen and (max-width: 34em) {
-	.input_field:focus + .input_label,
-	.input-filled .input_label  {
+
+	.input_field:focus+.input_label,
+	.input-filled .input_label {
 		-webkit-transform: translate3d(65%, 0, 0) scale3d(0.65, 0.65, 1);
 		transform: translate3d(65%, 0, 0) scale3d(0.65, 0.65, 1);
 		pointer-events: none;
@@ -112,16 +119,16 @@ body {
 }
 
 .button_field {
-    max-width: 300px;
-    width: calc(100% - 2em);
-    height: 74px;
-    border: none;
-    border-radius: 20px;
-    color: #6a7f95;
-    font-weight: bold;
-    font-size: 70.25%;
-    cursor: pointer;
-    -webkit-transition: 0.6s;
+	max-width: 300px;
+	width: calc(100% - 2em);
+	height: 74px;
+	border: none;
+	border-radius: 20px;
+	color: #6a7f95;
+	font-weight: bold;
+	font-size: 70.25%;
+	cursor: pointer;
+	-webkit-transition: 0.6s;
 	transition: 0.6s;
 }
 
@@ -130,25 +137,38 @@ body {
 	background: #A2C616;
 }
 
-*, *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; }
-.clearfix:before, .clearfix:after { content: ''; display: table; }
-.clearfix:after { clear: both; }
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: '';
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
 
 input {
-    line-height: normal;
-    font-size: 80%;
-    margin: 0;
+	line-height: normal;
+	font-size: 80%;
+	margin: 0;
 }
 
 #loading_gif {
-    display: none;
-    margin: auto;
+	display: none;
+	margin: auto;
 }
 
 .commentaire_block {
 	display: block;
-    margin: 1em auto 2em;
-    max-width: 500px;
+	margin: 1em auto 2em;
+	max-width: 500px;
 	width: calc(100% - 2em);
 }
 
@@ -173,4 +193,133 @@ input {
 
 #commentaire::-ms-input-placeholder {
 	color: #6a7f95;
+}
+
+.nodisplay-block {
+	display: none;
+}
+
+.file-upload {
+	cursor: pointer;
+	padding: 23px;
+}
+
+.file_upload {
+	cursor: pointer;
+	position: absolute;
+	padding: 23px;
+	width: 100%;
+	color: red;
+	font-weight: bold;
+	font-size: 70.25%;
+	right: 0;
+	top: 0;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.file_label {
+	cursor: pointer;
+}
+
+.file_label-content {
+	color: #fff;
+	font-weight: bold;
+	font-size: 70.25%;
+}
+
+.radio-block {
+	margin: 20px auto;
+	max-width: 400px;
+	width: calc(100% - 2em);
+	display: flex;
+	justify-content: space-between;
+}
+
+.radio_label {
+	color: #6a7f95;
+}
+
+.radio input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+}
+
+.radio input[type="radio"]+.radio_label:before {
+	content: '';
+	background: #f4f4f4;
+	border-radius: 100%;
+	border: 1px solid #b4b4b4;
+	display: inline-block;
+	width: 1.2em;
+	height: 1.2em;
+	position: relative;
+	margin-right: 1em;
+	vertical-align: top;
+	cursor: pointer;
+	text-align: center;
+	-webkit-transition: all .25s ease;
+	transition: all .25s ease;
+}
+
+.radio input[type="radio"]:checked+.radio_label:before {
+	background-color: #A2C616;
+	box-shadow: inset 0 0 0 4px #f4f4f4;
+}
+
+.radio input[type="radio"]:focus+.radio_label:before {
+	outline: none;
+	border-color: #A2C616;
+}
+
+.checkbox-block {
+	display: none;
+	margin: 20px auto;
+	max-width: 400px;
+	font-size: 19px;
+	color: #6a7f95;
+	flex-direction: column;
+	text-align: left;
+	width: calc(100% - 2em);
+	cursor: pointer !important;
+}
+
+.checkbox {
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+.checkbox_label {
+	cursor: pointer !important;
+}
+
+.checkbox input[type="checkbox"] {
+	position: absolute;
+	opacity: 0;
+}
+
+.checkbox input[type="checkbox"]+.checkbox_label:before {
+	content: '';
+	padding: 0 3px;
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	color: #fff;
+	border: 1px solid #b4b4b4;
+	border-radius: 20%;
+	vertical-align: text-top;
+	cursor: pointer;
+	margin-right: 8px;
+	transition: all .5s;
+}
+
+.checkbox input[type="checkbox"]:checked+.checkbox_label:before {
+	background: #A2C616;
+	content: '\2713';
+}
+
+.exemple {
+	color: #6a7f95;
+	font-size: 70%;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
