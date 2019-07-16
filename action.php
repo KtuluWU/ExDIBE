@@ -54,7 +54,7 @@ class SFTPConnection
 
         @fclose($stream);
     }
-} 
+}
 
 @$siren = $_POST["siren"];
 $ident = $_POST["ident"];
@@ -109,46 +109,58 @@ if ($code == 0) {
         $files = scandir("./files/");
 
         foreach ($files as $file) {
-            if ($file != '.' && $file != '..' && $file != '.DS_Store' && pathinfo($file, PATHINFO_EXTENSION) == 'csv') {
-                $mail->addAttachment("./files/" . $file);
+            if ($file != '.' && $file != '..' && $file != '.DS_Store') {
+                if (!$file_upload) {
+                    $mail->addAttachment("./files/" . $file);
+                } else {
+                    if (pathinfo($file, PATHINFO_EXTENSION) == 'csv') {
+                        $mail->addAttachment("./files/" . $file);
+                    }
+                }
             }
         }
 
         $mail->isHTML(true);
         $mail->Subject = 'ExDIBE - ' . $ident;
-        $mail->Body = "<h1>IDENTIFIANT: " . $ident . "</h1><br><h2>COMMENTAIRE: </h2><br>" . $commentaire;
+        $mail->Body = "<h2>IDENTIFIANT: " . $ident . "</h2><br><h2>COMMENTAIRE: </h2><br>" . $commentaire;
         $mail->AltBody = "IDENTIFIANT: " . $ident . " COMMENTAIRE: " . $commentaire;
 
         $mail->send();
 
-        foreach ($files as $file) {
-            if (pathinfo($file, PATHINFO_EXTENSION) == 'pdf') {
-                $zip = new ZipArchive();
-                $filename = "./zip/" . $res_zip . ".zip";
-                $zip->open($filename, ZIPARCHIVE::CREATE);
-                addFileToZip("./files/", $zip);
-                $zip->close();
+        if ($file_upload) {
+            foreach ($files as $file) {
+                if (pathinfo($file, PATHINFO_EXTENSION) == 'pdf') {
+                    $zip = new ZipArchive();
+                    $filename = "./zip/" . $res_zip . ".zip";
+                    $zip->open($filename, ZIPARCHIVE::CREATE);
+                    addFileToZip("./files/", $zip);
+                    $zip->close();
+                }
+                @unlink("./files/" . $file);
             }
-            @unlink("./files/" . $file);
+
+            /**
+             * Send zip to the server by ssh
+             */
+            try
+            {
+                $sftp = new SFTPConnection("10.168.128.120", 22);
+                $sftp->login("rbe", "Rbe2019");
+                $sftp->uploadFile("./zip/" . $res_zip . ".zip", "/home/rbe/" . $res_zip . ".zip");
+            } catch (Exception $e) {
+                echo $e->getMessage() . "\n";
+            }
+
+            @unlink("./zip/" . $res_zip . ".zip");
+
+            /******************************/
+
+            @unlink("./upload/" . $file_upload["name"]);
+        } else {
+            foreach ($files as $file) {
+                @unlink("./files/" . $file);
+            }
         }
-
-        /**
-         * Send zip to the server by ssh
-         */
-        try
-        {
-            $sftp = new SFTPConnection("10.168.128.120", 22);
-            $sftp->login("rbe", "Rbe2019");
-            $sftp->uploadFile("./zip/" . $res_zip . ".zip", "/home/rbe/". $res_zip . ".zip");
-        } catch (Exception $e) {
-            echo $e->getMessage() . "\n";
-        } 
-
-        @unlink("./zip/".$res_zip.".zip");
-
-        /******************************/
-
-        @unlink("./upload/" . $file_upload["name"]);
 
         echo "200";
 
