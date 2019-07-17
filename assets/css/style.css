@@ -1,6 +1,6 @@
 body {
-	background: #f9f7f6;
-	color: #404d5b;
+	background: #ebe4e0;
+	color: #6a7f95;
 	font-weight: 500;
 	font-size: 1.05em;
 	font-family: 'Raleway', Arial, sans-serif;
@@ -184,15 +184,15 @@ input {
 }
 
 #commentaire::-webkit-input-placeholder {
-	color: #6a7f95;
+	color: #97a5b5;
 }
 
 #commentaire::-moz-placeholder {
-	color: #6a7f95;
+	color: #97a5b5;
 }
 
 #commentaire::-ms-input-placeholder {
-	color: #6a7f95;
+	color: #97a5b5;
 }
 
 .nodisplay-block {
@@ -305,6 +305,7 @@ input {
 	width: 21px;
 	height: 21px;
 	color: #fff;
+	background: #fff;
 	border: 1px solid #b4b4b4;
 	border-radius: 20%;
 	vertical-align: text-top;
