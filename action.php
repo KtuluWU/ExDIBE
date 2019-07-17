@@ -122,7 +122,8 @@ if ($code == 0) {
 
         $mail->isHTML(true);
         $mail->Subject = 'ExDIBE - ' . $ident;
-        $mail->Body = "<h2>IDENTIFIANT: " . $ident . "</h2><br><h2>COMMENTAIRE: </h2><br>" . $commentaire;
+        //$mail->Body = "<h2>IDENTIFIANT: " . $ident . "</h2><br><h2>COMMENTAIRE: </h2><br>" . $commentaire;
+        $mail->Body = email_body_html($ident, $commentaire);
         $mail->AltBody = "IDENTIFIANT: " . $ident . " COMMENTAIRE: " . $commentaire;
 
         $mail->send();
@@ -184,4 +185,27 @@ function addFileToZip($path, $zip)
         }
     }
     @closedir($path);
+}
+
+function email_body_html($ident, $commentaire)
+{
+    return "
+        <div style=\"background: #ebe4e0;font-size:1.2em;\">
+            <div style=\"margin: 0 auto;text-align: center;font-size: 150%;padding: 3em 0;\">
+                <div style=\"max-width: 500px;width: calc(100% - 2em);margin: 1em auto;color: #fff;background: #A2C616;line-height: normal;border-radius: 20px;padding: 1.2em;font-weight: bold;\">
+                    <span style=\"font-size: 100%;\">ExDIBE</span>
+                </div>
+                <div style=\"max-width: 500px;width: calc(100% - 2em);margin: 1em auto;color: #fff;background: #A2C616;line-height: normal;border-radius: 20px;padding: 1.2em;\">
+                    <span style=\"font-size: 90%;font-weight: bold;\">Identifiant</span>
+                    <br>
+                    <span style=\"font-size: 70%;\">$ident</span>
+                </div>
+                <div style=\"max-width: 500px;width: calc(100% - 2em);margin: 1em auto;color: #6a7f95;background: #fff;line-height: normal;border-radius: 20px;padding: 1.2em;\">
+                    <span style=\"font-size: 90%;font-weight: bold;\">Commentaire</span>
+                    <br>
+                    <span style=\"font-size: 70%;color:#798ca0\">$commentaire</span>
+                </div>
+            </div>
+        </div>
+    ";
 }
