@@ -169,7 +169,7 @@ if ($code == 0) {
         echo $mail->ErrorInfo;
     }
 } else {
-    echo "Échec du programme Python.";
+    echo "L'identifiant ou le mot de passe est incorrect.";
 }
 
 function addFileToZip($path, $zip)
