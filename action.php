@@ -65,6 +65,7 @@ $commentaire = $_POST["commentaire"];
 @$python_option_ref = $_POST["python_option_ref"];
 @$file_upload = $_FILES["file_upload"];
 @$res_zip = $_POST["res_zip"];
+$flag = false;
 
 $url = "/Users/yw/Sites/ExDIBE/dibe_pdf_v2.py";
 $url_windows = "C:/xampp/htdocs/ExDIBE/dibe_pdf_v2.py";
@@ -90,7 +91,14 @@ if ($siren && !$file_upload) {
 
 exec($str_python, $output, $code);
 
-if ($code == 0) {
+$files = scandir("./files/");
+foreach ($files as $file) {
+    if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.gitkeep' && $file) {
+        $flag = true;
+    }
+}
+
+if ($code == 0 && $flag) {
     $mail = new PHPMailer(true);
     try {
         $mail->CharSet = "UTF-8";
@@ -105,11 +113,10 @@ if ($code == 0) {
 
         $mail->setFrom('test.infogreffe@gmail.com', 'DataInfogreffe');
         $mail->addAddress($email);
-
-        $files = scandir("./files/");
+        $mail->addCC('test.infogreffe@gmail.com');
 
         foreach ($files as $file) {
-            if ($file != '.' && $file != '..' && $file != '.DS_Store') {
+            if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.gitkeep') {
                 if (!$file_upload) {
                     $mail->addAttachment("./files/" . $file);
                 } else {
@@ -120,14 +127,6 @@ if ($code == 0) {
             }
         }
 
-        $mail->isHTML(true);
-        $mail->Subject = 'ExDIBE - ' . $ident;
-        //$mail->Body = "<h2>IDENTIFIANT: " . $ident . "</h2><br><h2>COMMENTAIRE: </h2><br>" . $commentaire;
-        $mail->Body = email_body_html($ident, $commentaire);
-        $mail->AltBody = "IDENTIFIANT: " . $ident . " COMMENTAIRE: " . $commentaire;
-
-        $mail->send();
-
         if ($file_upload) {
             foreach ($files as $file) {
                 if (pathinfo($file, PATHINFO_EXTENSION) == 'pdf') {
@@ -137,7 +136,6 @@ if ($code == 0) {
                     addFileToZip("./files/", $zip);
                     $zip->close();
                 }
-                @unlink("./files/" . $file);
             }
 
             /**
@@ -152,16 +150,31 @@ if ($code == 0) {
                 echo $e->getMessage() . "\n";
             }
 
-            @unlink("./zip/" . $res_zip . ".zip");
-
             /******************************/
+        } 
 
-            @unlink("./upload/" . $file_upload["name"]);
-        } else {
-            foreach ($files as $file) {
-                @unlink("./files/" . $file);
-            }
+        $mail->isHTML(true);
+        $mail->Subject = 'ExDIBE - ' . $ident;
+        $mail->Body = email_body_html($ident, $commentaire);
+        $mail->AltBody = "IDENTIFIANT: " . $ident . " COMMENTAIRE: " . $commentaire;
+        $mail->send();
+
+        /**
+         *  Clean up
+         */
+        $zips = scandir("./zip/");
+        $upload = scandir("./upload/");
+
+        foreach ($files as $file) {
+            if ($file != '.gitkeep') @unlink("./files/" . $file);
         }
+        foreach ($zips as $zip_f) {
+            if ($zip_f != '.gitkeep') @unlink("./zip/" . $zip_f);
+        }
+        foreach ($upload as $upload_f) {
+            if ($upload_f != '.gitkeep') @unlink("./upload/" . $upload_f);
+        }
+        /******************************/
 
         echo "200";
 
@@ -169,7 +182,7 @@ if ($code == 0) {
         echo $mail->ErrorInfo;
     }
 } else {
-    echo "L'identifiant ou le mot de passe est incorrect.";
+    echo "Erreur du programme Python.";
 }
 
 function addFileToZip($path, $zip)
