@@ -23,6 +23,8 @@ function ajax_send_data() {
 
     ident = ident_checked(ident);
 
+    res_zip = res_zip.replace(/\s+/g, "_");
+
     if (siren || file_upload) {
         document.getElementById("loading_gif").style.display = "block";
         data.append('ident', ident);
