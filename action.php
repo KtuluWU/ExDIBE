@@ -74,6 +74,8 @@ $url_files = "/ExDIBE/files/";
 $str_python = "/usr/local/bin/python3 " . $url . " -i " . $ident . " -p " . $pwd . " -d ./files";
 // $str_python = "python ".$url_windows." -i ".$ident." -p ".$pwd." -d ./files";
 
+clean_up();
+
 if ($siren && !$file_upload) {
     $str_python .= " -s " . $siren;
 } else if ($file_upload && !$siren) {
@@ -90,7 +92,6 @@ if ($siren && !$file_upload) {
 }
 
 exec($str_python, $output, $code);
-
 $files = scandir("./files/");
 foreach ($files as $file) {
     if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.gitkeep' && $file) {
@@ -151,7 +152,7 @@ if ($code == 0 && $flag) {
             }
 
             /******************************/
-        } 
+        }
 
         $mail->isHTML(true);
         $mail->Subject = 'ExDIBE - ' . $ident;
@@ -162,18 +163,7 @@ if ($code == 0 && $flag) {
         /**
          *  Clean up
          */
-        $zips = scandir("./zip/");
-        $upload = scandir("./upload/");
-
-        foreach ($files as $file) {
-            if ($file != '.gitkeep') @unlink("./files/" . $file);
-        }
-        foreach ($zips as $zip_f) {
-            if ($zip_f != '.gitkeep') @unlink("./zip/" . $zip_f);
-        }
-        foreach ($upload as $upload_f) {
-            if ($upload_f != '.gitkeep') @unlink("./upload/" . $upload_f);
-        }
+        clean_up();
         /******************************/
 
         echo "200";
@@ -221,4 +211,30 @@ function email_body_html($ident, $commentaire)
             </div>
         </div>
     ";
+}
+
+function clean_up()
+{
+    $files = scandir("./files/");
+    $zips = scandir("./zip/");
+    $upload = scandir("./upload/");
+
+    foreach ($files as $file) {
+        if ($file != '.gitkeep') {
+            @unlink("./files/" . $file);
+        }
+
+    }
+    foreach ($zips as $zip_f) {
+        if ($zip_f != '.gitkeep') {
+            @unlink("./zip/" . $zip_f);
+        }
+
+    }
+    foreach ($upload as $upload_f) {
+        if ($upload_f != '.gitkeep') {
+            @unlink("./upload/" . $upload_f);
+        }
+
+    }
 }
