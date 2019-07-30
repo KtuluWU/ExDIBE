@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -66,6 +68,8 @@ $commentaire = $_POST["commentaire"];
 @$file_upload = $_FILES["file_upload"];
 @$res_zip = $_POST["res_zip"];
 $flag = false;
+$filename_compl = false;
+$filename = false;
 
 $url = "/Users/yw/Sites/ExDIBE/dibe_pdf_v2.py";
 $url_windows = "C:/xampp/htdocs/ExDIBE/dibe_pdf_v2.py";
@@ -144,19 +148,21 @@ if ($code == 0 && $flag) {
                 }
             }
 
-            /**
-             * Send zip to the server by ssh
-             */
-            try
-            {
-                $sftp = new SFTPConnection("10.168.128.120", 22);
-                $sftp->login("rbe", "Rbe2019");
-                $sftp->uploadFile($filename_compl, "/home/rbe/" . $filename);
-            } catch (Exception $e) {
-                echo $e->getMessage() . "\n";
+            if (!$filename_compl) {
+                echo "\n Erreur de format des donnnées du fichier (ou il n'y a aucun siren qui peut générer un pdf): " . $output . " (vient du Python)\n";
+            } else {
+                /**
+                 * Send zip to the server by sftp
+                 */
+                try
+                {
+                    $sftp = new SFTPConnection("10.168.128.120", 22);
+                    $sftp->login("rbe", "Rbe2019");
+                    $sftp->uploadFile($filename_compl, "/home/rbe/" . $filename);
+                } catch (Exception $e) {
+                    echo "Erreur de SFTP: " . $e->getMessage() . "\n";
+                }
             }
-
-            /******************************/
         }
 
         $mail->isHTML(true);
