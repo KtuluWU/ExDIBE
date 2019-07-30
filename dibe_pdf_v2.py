@@ -769,7 +769,10 @@ for i in range(len(liste_sirens)):
 
     refclient=liste_refs[i]
 
-
+    #
+    #   enlever l'espace suivante de siren
+    #
+    siren = siren.strip()
 
     if siren.isdigit():
         
