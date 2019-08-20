@@ -70,21 +70,27 @@ $commentaire = $_POST["commentaire"];
 $flag = false;
 $filename_compl = false;
 $filename = false;
+$uploaded_filename = explode('.', $file_upload["name"])[0];
 
 $url = "/Users/yw/Sites/ExDIBE/dibe_pdf_v2.py";
 $url_windows = "C:/xampp/htdocs/ExDIBE/dibe_pdf_v2.py";
 $url_files = "/ExDIBE/files/";
 
-$str_python = "/usr/local/bin/python3 " . $url . " -i " . $ident . " -p " . $pwd . " -d ./files";
-// $str_python = "python ".$url_windows." -i ".$ident." -p ".$pwd." -d ./files";
+$str_python = "/usr/local/bin/python3 " . $url . " -i " . $ident . " -p " . $pwd;
+// $str_python = "python ".$url_windows." -i ".$ident." -p ".$pwd;
 
-clean_up();
+$v = ($file_upload ? true : false);
+clean_up($siren, $v, $uploaded_filename);
 
 if ($siren && !$file_upload) {
-    $str_python .= " -s " . $siren;
+    mkdir('./files/' . $siren, 0777, true);
+    $str_python .= " -s " . $siren . " -d ./files/" . $siren;
 } else if ($file_upload && !$siren) {
-    move_uploaded_file($file_upload["tmp_name"], "./upload/" . $file_upload["name"]);
-    $str_python .= " -f " . "./upload/" . $file_upload["name"];
+    mkdir('./files/' . $uploaded_filename, 0777, true);
+    mkdir('./upload/' . $uploaded_filename, 0777, true);
+    mkdir('./zip/' . $uploaded_filename, 0777, true);
+    move_uploaded_file($file_upload["tmp_name"], "./upload/" . $uploaded_filename . "/" . $file_upload["name"]);
+    $str_python .= " -f " . "./upload/" . $uploaded_filename . "/" . $file_upload["name"] . " -d ./files/" . $uploaded_filename . "/";
 
     if ($python_option_entete == "true") {
         $str_python .= " -e";
@@ -96,14 +102,16 @@ if ($siren && !$file_upload) {
 }
 
 exec($str_python, $output, $code);
-$files = scandir("./files/");
+$files = scandir("./files/"); // just for flag
+$files_siren = scandir("./files/" . $siren . "/");
+$files_multisirens = scandir("./files/" . $uploaded_filename . "/");
 foreach ($files as $file) {
     if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.gitkeep' && $file) {
         $flag = true;
     }
 }
 
-if ($code == 0 && $flag) {
+if ($code == 0) {
     $mail = new PHPMailer(true);
     try {
         $mail->CharSet = "UTF-8";
@@ -120,30 +128,32 @@ if ($code == 0 && $flag) {
         $mail->addAddress($email);
         $mail->addCC('test.infogreffe@gmail.com');
 
-        foreach ($files as $file) {
-            if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.gitkeep') {
-                if (!$file_upload) {
-                    $mail->addAttachment("./files/" . $file);
-                } else {
-                    if (pathinfo($file, PATHINFO_EXTENSION) == 'csv') {
-                        $mail->addAttachment("./files/" . $file);
-                    }
+        if (!$file_upload) {
+            foreach ($files_siren as $file) {
+                if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.gitkeep') {
+                    $mail->addAttachment("./files/" . $siren . "/" . $file);
+                }
+            }
+        } else {
+            foreach ($files_multisirens as $file) {
+                if (pathinfo($file, PATHINFO_EXTENSION) == 'csv') {
+                    $mail->addAttachment("./files/" . $uploaded_filename . "/" . $file);
                 }
             }
         }
 
         if ($file_upload) {
-            foreach ($files as $file) {
+            foreach ($files_multisirens as $file) {
                 if (pathinfo($file, PATHINFO_EXTENSION) == 'pdf') {
                     $zip = new ZipArchive();
                     if ($res_zip != "") {
                         $filename = $res_zip . ".zip";
                     } else {
-                        $filename = $file_upload["name"] . ".zip";
+                        $filename = $uploaded_filename . ".zip";
                     }
-                    $filename_compl = "./zip/" . $filename;
+                    $filename_compl = "./zip/" . $uploaded_filename . "/" . $filename;
                     $zip->open($filename_compl, ZIPARCHIVE::CREATE);
-                    addFileToZip("./files/", $zip);
+                    addFileToZip("./files/" . $uploaded_filename . "/", $zip);
                     $zip->close();
                 }
             }
@@ -174,7 +184,7 @@ if ($code == 0 && $flag) {
         /**
          *  Clean up
          */
-        clean_up();
+        clean_up($siren, $v, $uploaded_filename);
         /******************************/
 
         echo "200";
@@ -224,28 +234,34 @@ function email_body_html($ident, $commentaire)
     ";
 }
 
-function clean_up()
+function clean_up($siren, $multisirens, $file_upload)
 {
-    $files = scandir("./files/");
-    $zips = scandir("./zip/");
-    $upload = scandir("./upload/");
+    $url_cp = ($multisirens ? $file_upload : $siren);
+
+    $files = scandir("./files/" . $url_cp . "/");
+    $zips = scandir("./zip/" . $url_cp . "/");
+    $upload = scandir("./upload/" . $url_cp . "/");
 
     foreach ($files as $file) {
         if ($file != '.gitkeep') {
-            @unlink("./files/" . $file);
+            @unlink("./files/" . $url_cp . "/" . $file);
         }
 
     }
     foreach ($zips as $zip_f) {
         if ($zip_f != '.gitkeep') {
-            @unlink("./zip/" . $zip_f);
+            @unlink("./zip/" . $url_cp . "/" . $zip_f);
         }
 
     }
     foreach ($upload as $upload_f) {
         if ($upload_f != '.gitkeep') {
-            @unlink("./upload/" . $upload_f);
+            @unlink("./upload/" . $url_cp . "/" . $upload_f);
         }
 
     }
+
+    rmdir('./files/' . $url_cp);
+    rmdir('./zip/' . $url_cp);
+    rmdir('./upload/' . $url_cp);
 }
