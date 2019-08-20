@@ -1,3 +1,9 @@
+<?php
+$data = include 'config.php';
+$identifiant = $data['identifiant'];
+$password = $data['password'];
+$email = $data['email'];
+?>
 <!DOCTYPE html>
 <html>
 
@@ -75,7 +81,7 @@
                     <div class="input-block">
                         <span class="input">
                             <input class="input_field" type="text" name="ident" id="ident" maxlength="30"
-                                value="" />
+                                value="<?php echo $identifiant ?>" />
                             <label class="input_label" for="ident">
                                 <span class="input_label-content">Identifiant</span>
                             </label>
@@ -87,7 +93,7 @@
 
                     <div class="input-block">
                         <span class="input">
-                            <input class="input_field" type="password" name="password" id="password" value="12345"
+                            <input class="input_field" type="password" name="password" id="password" value="<?php echo $password ?>"
                                 autocomplete="off" />
                             <label class="input_label" for="password">
                                 <span class="input_label-content">Mot de passe</span>
@@ -97,7 +103,7 @@
 
                     <div class="input-block">
                         <span class="input">
-                            <input class="input_field" type="email" name="email" id="email" value="rbe@infogreffe-siege.fr"
+                            <input class="input_field" type="email" name="email" id="email" value="<?php echo $email ?>" 
                                 autocomplete="off" />
                             <label class="input_label" for="email">
                                 <span class="input_label-content">Email</span>
