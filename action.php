@@ -102,14 +102,8 @@ if ($siren && !$file_upload) {
 }
 
 exec($str_python, $output, $code);
-$files = scandir("./files/"); // just for flag
 $files_siren = scandir("./files/" . $siren . "/");
 $files_multisirens = scandir("./files/" . $uploaded_filename . "/");
-foreach ($files as $file) {
-    if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.gitkeep' && $file) {
-        $flag = true;
-    }
-}
 
 if ($code == 0) {
     $mail = new PHPMailer(true);
