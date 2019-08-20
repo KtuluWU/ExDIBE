@@ -8,6 +8,12 @@ require './assets/vendor/PHPMailer/src/Exception.php';
 require './assets/vendor/PHPMailer/src/PHPMailer.php';
 require './assets/vendor/PHPMailer/src/SMTP.php';
 
+$data = include 'config.php';
+
+$sftp_address = $data['sftp_address'];
+$sftp_login = $data['sftp_login'];
+$sftp_password = $data['sftp_password'];
+
 class SFTPConnection
 {
     private $connection;
@@ -160,8 +166,8 @@ if ($code == 0) {
                  */
                 try
                 {
-                    $sftp = new SFTPConnection("10.168.128.120", 22);
-                    $sftp->login("rbe", "Rbe2019");
+                    $sftp = new SFTPConnection($sftp_address, 22);
+                    $sftp->login($sftp_login, $sftp_password);
                     $sftp->uploadFile($filename_compl, "/home/rbe/" . $filename);
                 } catch (Exception $e) {
                     echo "Erreur de SFTP: " . $e->getMessage() . "\n";
