@@ -159,7 +159,7 @@ if ($code == 0) {
             }
 
             if (!$filename_compl) {
-                echo "\n Erreur de format des donnnées du fichier (ou il n'y a aucun siren qui peut générer un pdf): " . $output . " (vient du Python)\n";
+                echo "\n Erreur de format des donnnées du fichier (ou il n'y a aucun siren qui peut générer un pdf): " . $output . " (vient du Python)\n Essayez de supprimer les espaces dans le nom du fichier ou remplacez-les par « _ », et changez le format par csv (non UTF_8, séparé par virgule)";
             } else {
                 /**
                  * Send zip to the server by sftp
@@ -187,7 +187,7 @@ if ($code == 0) {
         clean_up($siren, $v, $uploaded_filename);
         /******************************/
 
-        echo "200";
+        echo "\n200";
 
     } catch (Exception $e) {
         echo $mail->ErrorInfo;
