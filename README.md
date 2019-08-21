@@ -1,6 +1,5 @@
-
-#ExDIBE#
-
+ExDIBE
+=============
 **Créez un fichier `<config.php>` dans la racine, le format est suivant:**
 ```php
 <?php
@@ -13,7 +12,7 @@
     $sftp_address = "adresse du serveur";
     $sftp_login = "identifiant du serveur";
     $sftp_password = "mot de passe du serveur";
-    $str_python_param = "votre commande python3 avec le chemin absolu \"un espace\" le programme python avec le chemin absolu";
+    $str_python_param = "votre commande python3 avec le chemin absolu « un espace » le programme python avec le chemin absolu";
 
 
     return array(
