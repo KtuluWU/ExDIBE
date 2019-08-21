@@ -13,6 +13,7 @@ $data = include 'config.php';
 $sftp_address = $data['sftp_address'];
 $sftp_login = $data['sftp_login'];
 $sftp_password = $data['sftp_password'];
+$str_python_param = $data['str_python_param'];
 
 class SFTPConnection
 {
@@ -80,11 +81,7 @@ $uploaded_filename_pre = explode('.', $file_upload["name"])[0];
 $uploaded_filename_url = str_replace(' ', '_', $uploaded_filename_pre);
 $uploaded_filename = str_replace(' ', '_', $file_upload["name"]);
 
-$url = "/Users/yw/Sites/ExDIBE/dibe_pdf_v2.py";
-$url_windows = "C:/xampp/htdocs/ExDIBE/dibe_pdf_v2.py";
-$url_files = "/ExDIBE/files/";
-
-$str_python = "/usr/local/bin/python3 " . $url . " -i " . $ident . " -p " . $pwd;
+$str_python = $str_python_param . " -i " . $ident . " -p " . $pwd;
 // $str_python = "python ".$url_windows." -i ".$ident." -p ".$pwd;
 
 $v = ($file_upload ? true : false);
