@@ -76,7 +76,9 @@ $commentaire = $_POST["commentaire"];
 $flag = false;
 $filename_compl = false;
 $filename = false;
-$uploaded_filename = explode('.', $file_upload["name"])[0];
+$uploaded_filename_pre = explode('.', $file_upload["name"])[0];
+$uploaded_filename_url = str_replace(' ', '_', $uploaded_filename_pre);
+$uploaded_filename = str_replace(' ', '_', $file_upload["name"]);
 
 $url = "/Users/yw/Sites/ExDIBE/dibe_pdf_v2.py";
 $url_windows = "C:/xampp/htdocs/ExDIBE/dibe_pdf_v2.py";
@@ -86,17 +88,17 @@ $str_python = "/usr/local/bin/python3 " . $url . " -i " . $ident . " -p " . $pwd
 // $str_python = "python ".$url_windows." -i ".$ident." -p ".$pwd;
 
 $v = ($file_upload ? true : false);
-clean_up($siren, $v, $uploaded_filename);
+clean_up($siren, $v, $uploaded_filename_url);
 
 if ($siren && !$file_upload) {
     mkdir('./files/' . $siren, 0777, true);
     $str_python .= " -s " . $siren . " -d ./files/" . $siren;
 } else if ($file_upload && !$siren) {
-    mkdir('./files/' . $uploaded_filename, 0777, true);
-    mkdir('./upload/' . $uploaded_filename, 0777, true);
-    mkdir('./zip/' . $uploaded_filename, 0777, true);
-    move_uploaded_file($file_upload["tmp_name"], "./upload/" . $uploaded_filename . "/" . $file_upload["name"]);
-    $str_python .= " -f " . "./upload/" . $uploaded_filename . "/" . $file_upload["name"] . " -d ./files/" . $uploaded_filename . "/";
+    mkdir('./files/' . $uploaded_filename_url, 0777, true);
+    mkdir('./upload/' . $uploaded_filename_url, 0777, true);
+    mkdir('./zip/' . $uploaded_filename_url, 0777, true);
+    move_uploaded_file($file_upload["tmp_name"], "./upload/" . $uploaded_filename_url . "/" . $uploaded_filename);
+    $str_python .= " -f " . "./upload/" . $uploaded_filename_url . "/" . $uploaded_filename . " -d ./files/" . $uploaded_filename_url . "/";
 
     if ($python_option_entete == "true") {
         $str_python .= " -e";
@@ -109,7 +111,7 @@ if ($siren && !$file_upload) {
 
 exec($str_python, $output, $code);
 $files_siren = scandir("./files/" . $siren . "/");
-$files_multisirens = scandir("./files/" . $uploaded_filename . "/");
+$files_multisirens = scandir("./files/" . $uploaded_filename_url . "/");
 
 if ($code == 0) {
     $mail = new PHPMailer(true);
@@ -137,7 +139,7 @@ if ($code == 0) {
         } else {
             foreach ($files_multisirens as $file) {
                 if (pathinfo($file, PATHINFO_EXTENSION) == 'csv') {
-                    $mail->addAttachment("./files/" . $uploaded_filename . "/" . $file);
+                    $mail->addAttachment("./files/" . $uploaded_filename_url . "/" . $file);
                 }
             }
         }
@@ -149,17 +151,17 @@ if ($code == 0) {
                     if ($res_zip != "") {
                         $filename = $res_zip . ".zip";
                     } else {
-                        $filename = $uploaded_filename . ".zip";
+                        $filename = $uploaded_filename_url . ".zip";
                     }
-                    $filename_compl = "./zip/" . $uploaded_filename . "/" . $filename;
+                    $filename_compl = "./zip/" . $uploaded_filename_url . "/" . $filename;
                     $zip->open($filename_compl, ZIPARCHIVE::CREATE);
-                    addFileToZip("./files/" . $uploaded_filename . "/", $zip);
+                    addFileToZip("./files/" . $uploaded_filename_url . "/", $zip);
                     $zip->close();
                 }
             }
 
             if (!$filename_compl) {
-                echo "\n Erreur de format des donnnées du fichier (ou il n'y a aucun siren qui peut générer un pdf): " . $output . " (vient du Python)\n Essayez de supprimer les espaces dans le nom du fichier ou remplacez-les par « _ », et changez le format par csv (non UTF_8, séparé par virgule)";
+                echo "\n Erreur de format des donnnées du fichier (ou il n'y a aucun siren qui peut générer un pdf): " . $output . " (vient du Python)\n Essayez de supprimer les espaces dans le nom du fichier ou remplacez-les par « _ », et changez le format par csv (non UTF_8, séparé par virgule)\n";
             } else {
                 /**
                  * Send zip to the server by sftp
@@ -184,10 +186,10 @@ if ($code == 0) {
         /**
          *  Clean up
          */
-        clean_up($siren, $v, $uploaded_filename);
+        clean_up($siren, $v, $uploaded_filename_url);
         /******************************/
 
-        echo "\n200";
+        echo "200";
 
     } catch (Exception $e) {
         echo $mail->ErrorInfo;
