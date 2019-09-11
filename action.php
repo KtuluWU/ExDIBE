@@ -203,7 +203,7 @@ function addFileToZip($path, $zip)
             if (is_dir($path . "/" . $filename_compl)) { // 如果读取的某个对象是文件夹，则递归
                 addFileToZip($path . "/" . $filename_compl, $zip);
             } else { //将文件加入zip对象
-                $zip->addFile($path . "/" . $filename_compl);
+                $zip->addFile($path . "/" . $filename_compl, $filename_compl);
             }
         }
     }
