@@ -506,7 +506,7 @@ def download_acte(url,siren,directory,date,ref):
 
         r = requests.get(url)
 
-        if (r.headers['Content-Type']) == "application/pdf":
+        if ((r.headers['Content-Type']) == "application/pdf") or ((r.headers['Content-Type']) == "text/html; charset=UTF-8"):
 
 
             file=io.open(filename,"wb")
