@@ -504,11 +504,7 @@ def download_acte(url,siren,directory,date,ref):
 
     if simul!='oui':
 
-
-
         r = requests.get(url)
-
-        print(r.headers['Content-Type'])
 
         if (r.headers['Content-Type']) == "application/pdf":
 
