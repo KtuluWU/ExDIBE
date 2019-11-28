@@ -504,24 +504,27 @@ def download_acte(url,siren,directory,date,ref):
 
     if simul!='oui':
 
-
-
         r = requests.get(url)
 
-        file=io.open(filename,"wb")
+        if (r.headers['Content-Type']) == "application/pdf":
 
-        file.write(r.content)
 
-        file.close()
+            file=io.open(filename,"wb")
+
+            file.write(r.content)
+
+            file.close()
+
+            return(os.path.basename(filename))
+        else:
+            return(r.text)
+    
+    return(os.path.basename(filename))
+        
 
 #    else:
 
 #        print(siren)
-
-    
-
-    return(os.path.basename(filename))
-
 
 
         
