@@ -508,20 +508,27 @@ def download_acte(url,siren,directory,date,ref):
 
         r = requests.get(url)
 
-        file=io.open(filename,"wb")
+        print(r.headers['Content-Type'])
 
-        file.write(r.content)
+        if (r.headers['Content-Type']) == "application/pdf":
 
-        file.close()
+
+            file=io.open(filename,"wb")
+
+            file.write(r.content)
+
+            file.close()
+
+            return(os.path.basename(filename))
+        else:
+            return(r.text)
+    
+    return(os.path.basename(filename))
+        
 
 #    else:
 
 #        print(siren)
-
-    
-
-    return(os.path.basename(filename))
-
 
 
         
