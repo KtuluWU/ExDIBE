@@ -1,4 +1,5 @@
 <?php
+ini_set('max_execution_time','6000');
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 use PHPMailer\PHPMailer\Exception;
@@ -72,6 +73,8 @@ $email = $_POST["email"];
 $commentaire = $_POST["commentaire"];
 @$python_option_entete = $_POST["python_option_entete"];
 @$python_option_ref = $_POST["python_option_ref"];
+//$format_res_pdf = $_POST["format_res_pdf"];
+//$format_res_data = $_POST["format_res_data"];
 @$file_upload = $_FILES["file_upload"];
 @$res_zip = $_POST["res_zip"];
 $flag = false;
