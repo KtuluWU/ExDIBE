@@ -8,6 +8,8 @@ function ajax_send_data() {
     var file_upload = document.form_info.file_upload.files[0];
     var python_option_entete = document.form_info.python_option_entete;
     var python_option_ref = document.form_info.python_option_ref;
+    var format_res_pdf = document.form_info.format_res_pdf;
+    var format_res_data = document.form_info.format_res_data;
     var res_zip = document.form_info.res_zip.value;
     var url = "./action.php";
     var data = new FormData();
@@ -25,7 +27,7 @@ function ajax_send_data() {
 
     res_zip = res_zip.replace(/\s+/g, "_");
 
-    if (siren || file_upload) {
+    if ((siren || file_upload) && format_res_checked(format_res_pdf, format_res_data)) {
         document.getElementById("loading_gif").style.display = "block";
         data.append('ident', ident);
         data.append('pwd', pwd);
@@ -33,6 +35,8 @@ function ajax_send_data() {
         data.append('commentaire', commentaire);
         data.append('python_option_entete', python_option_entete.checked);
         data.append('python_option_ref', python_option_ref.checked);
+        data.append('format_res_pdf', format_res_pdf.checked);
+        data.append('format_res_data', format_res_data.checked);
         data.append('res_zip', res_zip);
         var ajax = false;
         //初始化XMLHttpRequest对象
@@ -146,6 +150,19 @@ function file_checked(file) {
         return false;
     }
     return file;
+}
+
+function format_res_checked(pdf, data) {
+    if (!pdf.checked && !data.checked) {
+        swal({
+            title: "Échoué!",
+            text: "Veuillez choisir un format du fichier résultat!",
+            type: "error"
+        })
+        return false;
+    } else {
+        return true;
+    }
 }
 
 $(document).ready(function () {

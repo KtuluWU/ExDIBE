@@ -328,6 +328,25 @@ input {
 	content: '\2713';
 }
 
+.checkbox2-block {
+	font-size: 23px;
+}
+
+.format_res_block {
+	margin: 20px auto;
+	max-width: 400px;
+	font-size: 19px;
+	color: #6a7f95;
+	flex-direction: row;
+	text-align: center;
+	width: calc(100% - 2em);
+	cursor: pointer !important;
+}
+
+.format_res {
+	margin: 0 20px;
+}
+
 .exemple {
 	color: #6a7f95;
 	font-size: 70%;

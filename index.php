@@ -11,6 +11,7 @@ $email = $data['email'];
     <meta charset="UTF-8">
     <link rel='stylesheet' href='assets/css/style.css'>
     <link rel='stylesheet' href='assets/css/sweet-alert.css'>
+    <link rel='shortcut icon' href='assets/data_favicon.png' />
     <title> ExDIBE </title>
 </head>
 
@@ -43,12 +44,14 @@ $email = $data['email'];
                         <span class="checkbox">
                             <input type="checkbox" name="python_option" id="python_option_entete"
                                 value="python_option_entete">
-                            <label for="python_option_entete" class="checkbox_label">Il existe une entête en première ligne?</label>
+                            <label for="python_option_entete" class="checkbox_label">Il existe une entête en première
+                                ligne?</label>
                         </span>
                         <span class="checkbox">
                             <input type="checkbox" name="python_option" id="python_option_ref"
                                 value="python_option_ref">
-                            <label for="python_option_ref" class="checkbox_label">Il existe des références dans la colonne 2?</label>
+                            <label for="python_option_ref" class="checkbox_label">Il existe des références dans la
+                                colonne 2?</label>
                         </span>
                     </div>
 
@@ -93,8 +96,8 @@ $email = $data['email'];
 
                     <div class="input-block">
                         <span class="input">
-                            <input class="input_field" type="password" name="password" id="password" value="<?php echo $password ?>"
-                                autocomplete="off" />
+                            <input class="input_field" type="password" name="password" id="password"
+                                value="<?php echo $password ?>" autocomplete="off" />
                             <label class="input_label" for="password">
                                 <span class="input_label-content">Mot de passe</span>
                             </label>
@@ -103,7 +106,7 @@ $email = $data['email'];
 
                     <div class="input-block">
                         <span class="input">
-                            <input class="input_field" type="email" name="email" id="email" value="<?php echo $email ?>" 
+                            <input class="input_field" type="email" name="email" id="email" value="<?php echo $email ?>"
                                 autocomplete="off" />
                             <label class="input_label" for="email">
                                 <span class="input_label-content">Email</span>
@@ -112,10 +115,26 @@ $email = $data['email'];
                     </div>
 
 
-                    <span class="commentaire_block">
+                    <div class="commentaire_block">
                         <textarea class="commentaire" name="commentaire" id="commentaire" maxlength="100"
                             placeholder="Commentaire..."></textarea>
-                    </span>
+                    </div>
+
+                    <div class="checkbox2-block">
+                        <div class="format_res_label">
+                            Format du fichier résultat:
+                        </div>
+                        <div class="format_res_block">
+                            <span class="checkbox format_res">
+                                <input type="checkbox" name="format_res" id="format_res_pdf" value="format_res_pdf">
+                                <label for="format_res_pdf" class="checkbox_label">PDF</label>
+                            </span>
+                            <span class="checkbox format_res">
+                                <input type="checkbox" name="format_res" id="format_res_data" value="format_res_data">
+                                <label for="format_res_data" class="checkbox_label">DATA</label>
+                            </span>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="button_block">
