@@ -224,7 +224,7 @@ function operation($code, $output, $file_upload, $siren, $files_siren, $files_mu
             
         }
     } else {
-        print_r("Erreur du python: ".$output);
+        print_r($output);
     }
 }
 

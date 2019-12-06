@@ -20,6 +20,22 @@ $email = $data['email'];
         <form id="form_info" name="form_info" action="" method="POST" enctype="multipart/form-data">
             <div class="content">
                 <div class="">
+                    <div class="checkbox2-block">
+                        <div class="format_res_label">
+                            Format du fichier résultat:
+                        </div>
+                        <div class="format_res_block">
+                            <span class="checkbox format_res">
+                                <input type="checkbox" name="format_res" id="format_res_pdf" value="format_res_pdf">
+                                <label for="format_res_pdf" class="checkbox_label">PDF</label>
+                            </span>
+                            <span class="checkbox format_res">
+                                <input type="checkbox" name="format_res" id="format_res_data" value="format_res_data">
+                                <label for="format_res_data" class="checkbox_label">DATA</label>
+                            </span>
+                        </div>
+                    </div>
+
                     <div class="radio-block">
                         <span class="radio">
                             <input type="radio" name="siren_select" id="siren_single" value="siren_single" checked>
@@ -118,22 +134,6 @@ $email = $data['email'];
                     <div class="commentaire_block">
                         <textarea class="commentaire" name="commentaire" id="commentaire" maxlength="100"
                             placeholder="Commentaire..."></textarea>
-                    </div>
-
-                    <div class="checkbox2-block">
-                        <div class="format_res_label">
-                            Format du fichier résultat:
-                        </div>
-                        <div class="format_res_block">
-                            <span class="checkbox format_res">
-                                <input type="checkbox" name="format_res" id="format_res_pdf" value="format_res_pdf">
-                                <label for="format_res_pdf" class="checkbox_label">PDF</label>
-                            </span>
-                            <span class="checkbox format_res">
-                                <input type="checkbox" name="format_res" id="format_res_data" value="format_res_data">
-                                <label for="format_res_data" class="checkbox_label">DATA</label>
-                            </span>
-                        </div>
                     </div>
 
                 </div>
