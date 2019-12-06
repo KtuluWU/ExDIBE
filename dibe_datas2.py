@@ -804,7 +804,7 @@ else:
     
 
 output_name2=root_dir+"/"+fname+"_RBE_datas.xlsx"
-today=str(datetime.now()).replace(' ','_').replace('/',':')
+today=str(datetime.now()).replace(' ','_').replace('.','8').replace('.','_')
 dtdemande=str(datetime.now().date())
 output_name_ax=root_dir+"/"+ident+"_RBE_datas_AX_"+today+".xlsx"
 
