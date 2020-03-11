@@ -700,7 +700,7 @@ if flagsiren=='false':
 
                 elif sh.cell_type(rownum,0) ==1:
 
-                    siren=str(sh.row_values(rownum)[0]).replace(' ','').zfill(9)
+                    siren=str(sh.row_values(rownum)[0]).replace(' ','').replace(u'\xa0', u'').zfill(9)
 
                 if sh.ncols > 1 and flagref=='true':
 

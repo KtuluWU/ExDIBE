@@ -147,33 +147,34 @@ $email = $data['email'];
             </div>
         </form>
     </div>
+
+    <script src='assets/vendor/jquery-3.4.1.min.js'></script>
+    <script src='assets/vendor/sweet-alert.js'></script>
+    <script src='assets/js/action.js'></script>
+    <script src='assets/js/classie.js'></script>
+    <script>
+        (function () {
+            [].slice.call(document.querySelectorAll('input.input_field')).forEach(function (inputEl) {
+                if (inputEl.value.trim() !== '') {
+                    classie.add(inputEl.parentNode, 'input-filled');
+                }
+
+                // events:
+                inputEl.addEventListener('focus', onInputFocus);
+                inputEl.addEventListener('blur', onInputBlur);
+            });
+
+            function onInputFocus(ev) {
+                classie.add(ev.target.parentNode, 'input-filled');
+            }
+
+            function onInputBlur(ev) {
+                if (ev.target.value.trim() === '') {
+                    classie.remove(ev.target.parentNode, 'input-filled');
+                }
+            }
+        })();
+    </script>
 </body>
-<script src='assets/vendor/jquery-3.4.1.min.js'></script>
-<script src='assets/vendor/sweet-alert.js'></script>
-<script src='assets/js/action.js'></script>
-<script src='assets/js/classie.js'></script>
-<script>
-    (function () {
-        [].slice.call(document.querySelectorAll('input.input_field')).forEach(function (inputEl) {
-            if (inputEl.value.trim() !== '') {
-                classie.add(inputEl.parentNode, 'input-filled');
-            }
-
-            // events:
-            inputEl.addEventListener('focus', onInputFocus);
-            inputEl.addEventListener('blur', onInputBlur);
-        });
-
-        function onInputFocus(ev) {
-            classie.add(ev.target.parentNode, 'input-filled');
-        }
-
-        function onInputBlur(ev) {
-            if (ev.target.value.trim() === '') {
-                classie.remove(ev.target.parentNode, 'input-filled');
-            }
-        }
-    })();
-</script>
 
 </html>

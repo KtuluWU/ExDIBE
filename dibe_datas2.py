@@ -675,7 +675,7 @@ if file == 'true':
                 siren=str(int(sh.row_values(rownum)[0])).zfill(9)
                 liste_unique.add(siren)
             elif sh.cell_type(rownum,0) ==1:
-                siren=str(sh.row_values(rownum)[0]).replace(' ','').zfill(9)
+                siren=str(sh.row_values(rownum)[0]).replace(' ','').replace(u'\xa0', u'').zfill(9)
                 if siren==siren.lower() and siren==siren.upper():
                     liste_unique.add(siren)
                 else:
